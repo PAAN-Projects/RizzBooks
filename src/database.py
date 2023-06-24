@@ -18,7 +18,9 @@ class ORM:
                                     UserID int,
                                     UserName varchar(255),
                                     UserYear int,
-                                    UserAge int
+                                    UserAge int,
+                                    UserPass varchar(255),
+                                    PRIMARY KEY (UserID)
                                 );
                                     CREATE TABLE Books (
                                     BookID int,
@@ -28,12 +30,20 @@ class ORM:
                                     BookRating int,
                                     BookImage BLOB,
                                     BookRatedAge int,
-                                    BookStock int
+                                    BookStock int,
+                                    BookSellerID int,
+                                    PRIMARY KEY (BookID),
+                                    FOREIGN KEY (BookSelLerID) REFERENCES Users(UserID)
                                 );
                                 """)
         self.db_connection.commit()
 
-    def addBook(self, book_id, book_name, book_description, book_year, book_rating, book_image, book_ratedage, book_stock):
+    def addBook(self, user_name, book_id, book_name, book_description, book_year, book_rating, book_image, book_ratedage, book_stock, book_sellerID):
+        self.db_cursor.execute("""
+                                    SELECT * FROM Users
+                                    WHERE UserName=?
+                               """, (user_name,))
+        user = self.db_cursor.fetchall()
         self.db_cursor.execute("""
                                 INSERT INTO Books(
                                     BookID,
@@ -43,20 +53,33 @@ class ORM:
                                     BookRating,
                                     BookImage,
                                     BookRatedAge,
-                                    BookStock
+                                    BookStock,
+                                    BookSellerId
                                 )
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-                               """, (book_id, book_name, book_description, book_year, book_rating, book_image, book_ratedage, book_stock))
+                               """, (book_id, book_name, book_description, book_year, book_rating, book_image, book_ratedage, book_stock, user[0][1]))
         self.db_connection.commit()
 
-    def addUser(self, user_id, user_name, user_year, user_age):
+    def addUser(self, user_id, user_name, user_year, user_age, user_pass):
         self.db_cursor.execute("""
-                                INSERT INTO Books(
+                                INSERT INTO Users(
                                     UserID,
                                     UserName,
                                     UserYear,
-                                    UserAge 
+                                    UserAge,
+                                    UserPass
                                 )
-                                VALUES (?, ?, ?, ?);
-                               """, (user_id, user_name, user_year, user_age))
+                                VALUES (?, ?, ?, ?, ?);
+                               """, (user_id, user_name, user_year, user_age, user_pass))
         self.db_connection.commit()
+
+    def getUser(self, user_name):
+        self.db_cursor.execute("""
+                                SELECT * FROM Users
+                                WHERE UserName=?
+                               """, (user_name,))
+        user = self.db_cursor.fetchall()
+        return user[0]
+
+
+a = ORM()
