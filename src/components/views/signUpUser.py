@@ -53,18 +53,20 @@ class signUpView(ft.UserControl):
             st = checkStrength(e.control.value)
             if len(st["suggestion"]) > 0:
                 self.passowordStrengthText.value = f"Tip: {st['suggestion'][0]}"
+            else:
+                self.passowordStrengthText.value = ''
+
             if st["strength"] >= 3:
                 self.passowordStrengthBar.color = ft.colors.GREEN
             elif st['strength'] == 2:
                 self.passowordStrengthBar.color = ft.colors.AMBER
             elif st['strength'] <= 1:
                 self.passowordStrengthBar.color = ft.colors.RED
-            ab = st["strength"] / 4
-            print(ab)
-            self.passowordStrengthBar.value = ab
+            self.passowordStrengthBar.value = st["strength"] / 4
             self.update()
         except:
-            pass
+            self.passowordStrengthBar.value = 0
+            self.update()
 
     def add_user(self, e):
         try:
