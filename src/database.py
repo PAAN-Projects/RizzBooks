@@ -81,5 +81,14 @@ class ORM:
         user = self.db_cursor.fetchall()
         return user[0]
 
+    def delAllUsers(self):
+        self.db_cursor.execute("""
+                               DELETE FROM Users
+                               """)
+        self.db_connection.commit()
 
-a = ORM()
+    def delAllBooks(self):
+        self.db_cursor.execute("""
+                               DELETE FROM Books
+                               """)
+        self.db_connection.commit()

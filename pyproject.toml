@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 flet = "^0.7.1"
+zxcvbn = "^4.4.28"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.20.0"
