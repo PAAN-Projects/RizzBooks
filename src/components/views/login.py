@@ -14,7 +14,8 @@ class login(ft.UserControl):
         self.header = ft.Text(
             "Login", weight=ft.FontWeight.W_200, size=50)
         self.userNameInput = ft.TextField(label="User Name")
-        self.userPassInput = ft.TextField(label="User Password")
+        self.userPassInput = ft.TextField(
+            label="User Password", password=True, can_reveal_password=True)
         self.warningSnackBar = ft.SnackBar(
             ft.Text("Wrong username or password"))
         self.loginBtn = ft.FilledTonalButton(
