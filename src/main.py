@@ -1,6 +1,10 @@
 import flet as ft
 
 from components.views.signUpUser import signUpView
+from components.views.bookAdd import bookAdd
+from components.views.login import login
+
+from database import ORM
 
 
 def main(page: ft.Page):
@@ -8,6 +12,8 @@ def main(page: ft.Page):
     page.title = "DEEZ Books"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+
+    page.db = ORM()
 
     page.fonts = {
         "Bookerly Bold": "https://cdn.jsdelivr.net/gh/PAAN-Projects/DeezBooks@master/src/assets/fonts/Bookerly-Bold.ttf",
@@ -18,7 +24,12 @@ def main(page: ft.Page):
     def openSignUp(e):
         page.go("/signup")
 
+    def openLogin(e):
+        page.go("/login")
+
     signup = signUpView()
+    addbook = bookAdd()
+    loginpage = login()
 
     def routeChange(route):
         page.views.clear()
@@ -33,6 +44,8 @@ def main(page: ft.Page):
                         center_title=False,
                         bgcolor=ft.colors.SURFACE_VARIANT,
                         actions=[
+                            ft.IconButton(
+                                ft.icons.ADD, on_click=lambda _: page.go("/book/add")),
                             ft.TextField(
                                 filled=True,
                                 hint_text="Search here",
@@ -42,7 +55,8 @@ def main(page: ft.Page):
                             ft.IconButton(ft.icons.SEARCH_ROUNDED),
                             ft.PopupMenuButton(
                                 items=[
-                                    ft.PopupMenuItem(text="Login"),
+                                    ft.PopupMenuItem(
+                                        text="Login", on_click=openLogin),
                                     ft.PopupMenuItem(
                                         text="Sign Up", on_click=openSignUp)
                                 ],
@@ -64,6 +78,28 @@ def main(page: ft.Page):
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
                     signup]
+            ))
+        elif page.route == "/login":
+            page.views.append(ft.View(
+                "/book/add",
+                [
+                    ft.AppBar(
+                        title=ft.Text("Login",
+                                      font_family="Bookerly"),
+                        bgcolor=ft.colors.SURFACE_VARIANT,
+                    ),
+                    loginpage]
+            ))
+        elif page.route == "/book/add":
+            page.views.append(ft.View(
+                "/book/add",
+                [
+                    ft.AppBar(
+                        title=ft.Text("Add Book",
+                                      font_family="Bookerly"),
+                        bgcolor=ft.colors.SURFACE_VARIANT,
+                    ),
+                    addbook]
             ))
         page.update()
 

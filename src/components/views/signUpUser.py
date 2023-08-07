@@ -10,7 +10,6 @@ import datetime
 
 class signUpView(ft.UserControl):
     def build(self):
-
         self.userNameInput = ft.TextField(label="Name")
         self.userAgeInput = ft.TextField(
             label="Age", keyboard_type=ft.KeyboardType.NUMBER, error_text="", on_change=self.check_int_age)
@@ -18,7 +17,7 @@ class signUpView(ft.UserControl):
             label="Password", password=True, can_reveal_password=True, on_change=self.check_pass_strength)
         self.passowordStrengthBar = ft.ProgressBar(value=0)
         self.passowordStrengthText = ft.Text("")
-        self.submitButton = ft.ElevatedButton(
+        self.submitButton = ft.FilledTonalButton(
             text="Sign Up", icon=ft.icons.ARROW_FORWARD_ROUNDED, on_click=self.add_user)
         self.warningText = "Please enter a valid password"
         self.warningSnackBar = ft.SnackBar(ft.Text(self.warningText))
@@ -55,7 +54,6 @@ class signUpView(ft.UserControl):
                 self.passowordStrengthText.value = f"Tip: {st['suggestion'][0]}"
             else:
                 self.passowordStrengthText.value = ''
-
             if st["strength"] >= 3:
                 self.passowordStrengthBar.color = ft.colors.GREEN
             elif st['strength'] == 2:
@@ -70,18 +68,18 @@ class signUpView(ft.UserControl):
 
     def add_user(self, e):
         try:
-            db = ORM()
             user_id = randint(1_000_000, 9_999_999)
             currentDate = datetime.date.today()
             if self.passowordStrengthBar.value * 4 >= 2:
-                db.addUser(user_id=user_id, user_name=self.userNameInput.value, user_year=currentDate.year,
-                           user_age=self.userAgeInput.value, user_pass=self.userPasswordInput.value)
+                self.page.db.addUser(user_id=user_id, user_name=self.userNameInput.value, user_year=currentDate.year,
+                                     user_age=self.userAgeInput.value, user_pass=self.userPasswordInput.value)
 
-                self.warningText = "User Added!"
+                self.warningSnackBar.content = ft.Text("User Added!")
                 self.warningSnackBar.open = True
                 self.update()
             else:
-                self.warningText = "Please enter a valid password"
+                self.warningSnackBar.content = ft.Text(
+                    "Please enter a valid password")
                 self.warningSnackBar.open = True
                 self.update()
         except:

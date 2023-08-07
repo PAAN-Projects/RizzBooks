@@ -5,7 +5,8 @@ import sqlite3
 class ORM:
     def __init__(self):
         self.db_location = './database.db'
-        self.db_connection = sqlite3.connect(self.db_location)
+        self.db_connection = sqlite3.connect(
+            self.db_location, check_same_thread=False)
         self.db_cursor = self.db_connection.cursor()
         empty = self.db_cursor.execute(
             "SELECT name FROM sqlite_schema").fetchall()
@@ -13,6 +14,11 @@ class ORM:
             self.__createDefaultTable()
 
     def __createDefaultTable(self):
+        """
+            Private function: this function can't be accessed outside of this class
+
+            @summary: This Function creates basic database struct if database is not found
+        """
         self.db_cursor.executescript("""
                                     CREATE TABLE Users (
                                     UserID int,
@@ -20,7 +26,8 @@ class ORM:
                                     UserYear int,
                                     UserAge int,
                                     UserPass varchar(255),
-                                    PRIMARY KEY (UserID)
+                                    PRIMARY KEY (UserID),
+                                    UNIQUE(UserName)
                                 );
                                     CREATE TABLE Books (
                                     BookID int,
