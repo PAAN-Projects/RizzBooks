@@ -45,7 +45,7 @@ class ORM:
                                 """)
         self.db_connection.commit()
 
-    def addBook(self, user_name, book_id, book_name, book_description, book_year, book_rating, book_image, book_ratedage, book_stock, book_sellerID):
+    def addBook(self, user_name, book_id, book_name, book_description, book_year, book_rating, book_ratedage, book_stock):
         self.db_cursor.execute("""
                                     SELECT * FROM Users
                                     WHERE UserName=?
@@ -58,13 +58,12 @@ class ORM:
                                     BookDescription,
                                     BookYear,
                                     BookRating,
-                                    BookImage,
                                     BookRatedAge,
                                     BookStock,
                                     BookSellerId
                                 )
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-                               """, (book_id, book_name, book_description, book_year, book_rating, book_image, book_ratedage, book_stock, user[0][1]))
+                               """, (book_id, book_name, book_description, book_year, book_rating, book_ratedage, book_stock, user[0][1]))
         self.db_connection.commit()
 
     def addUser(self, user_id, user_name, user_year, user_age, user_pass):

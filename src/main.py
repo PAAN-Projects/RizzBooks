@@ -12,7 +12,9 @@ def main(page: ft.Page):
     page.title = "DEEZ Books"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-
+    page.scroll = "ALWAYS"
+    page.pick_files_dialog = ft.FilePicker()
+    page.overlay.append(page.pick_files_dialog)
     page.db = ORM()
 
     page.fonts = {
@@ -66,6 +68,7 @@ def main(page: ft.Page):
                     ),
                     ft.Text(value="h")
                 ],
+                scroll="ALWAYS"
             )
         )
         if page.route == "/signup":
@@ -77,7 +80,9 @@ def main(page: ft.Page):
                                       font_family="Bookerly"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
-                    signup]
+                    signup],
+                scroll="ALWAYS"
+
             ))
         elif page.route == "/login":
             page.views.append(ft.View(
@@ -88,7 +93,9 @@ def main(page: ft.Page):
                                       font_family="Bookerly"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
-                    loginpage]
+                    loginpage],
+                scroll="ALWAYS"
+
             ))
         elif page.route == "/book/add":
             page.views.append(ft.View(
@@ -99,7 +106,8 @@ def main(page: ft.Page):
                                       font_family="Bookerly"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
-                    addbook]
+                    addbook],
+                scroll="ALWAYS"
             ))
         page.update()
 
@@ -115,4 +123,5 @@ def main(page: ft.Page):
     page.go(page.route)
 
 
-ft.app(target=main, assets_dir="assets")
+ft.app(target=main, assets_dir="assets",
+       upload_dir="uploads", view=ft.WEB_BROWSER)
