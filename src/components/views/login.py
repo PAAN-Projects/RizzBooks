@@ -37,7 +37,7 @@ class login(ft.UserControl):
         try:
             req = self.page.db.getUser(user_name=self.userNameInput.value, )
             if req[4] == self.userPassInput.value:
-                self.page.session.set("current-user", req[1])
+                self.page.session.set("current_user", req[1])
                 self.warningSnackBar.content = ft.Text(
                     f"Logged in as {req[1]}")
                 self.warningSnackBar.open = True
