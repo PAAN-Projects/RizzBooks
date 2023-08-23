@@ -1,11 +1,6 @@
-import math
-from time import sleep
 import flet as ft
-from utils.password import checkStrength
-from database import ORM
 
 from random import randint
-import datetime
 
 
 class bookAdd(ft.UserControl):
@@ -33,7 +28,8 @@ class bookAdd(ft.UserControl):
         self.add_book_button = ft.FilledButton(
             "Add book", icon=ft.icons.ADD_ROUNDED, on_click=self.addBookDb)
 
-        self.warningSnackBar = ft.SnackBar(ft.Text("Something wwent wrong"))
+        self.warningSnackBar = ft.SnackBar(
+            ft.Text("Something went wrong"))
         return ft.Container(content=ft.Column(controls=[
             self.book_cover,
             self.file_picker,
@@ -70,23 +66,29 @@ class bookAdd(ft.UserControl):
                         f.name,
                         upload_url=self.page.get_upload_url(
                             f"{self.book_name.value}.png", 600),
+                        method="PUT"
                     )
                 )
             self.page.pick_files_dialog.upload(upload_list)
 
     def addBookDb(self, e):
-        self.warningSnackBar.open = False
-        self.warningSnackBar.content = "Something went wrong"
+        self.warningSnackBar.content = ft.Text("Something went wrong")
         if self.page.session.get("current_user") == None or self.book_name.value == "" or self.book_desc.value == "" or self.book_year.value == "" or self.book_age_rating.value == "" or self.book_stock.value == "":
             self.warningSnackBar.open = True
+            self.update()
             return
         else:
-            # try:
-            book_id = randint(1_000_000, 9_999_999)
-            self.page.db.addBook(self.page.session.get("current_user"), book_id, self.book_name.value, self.book_desc.value, int(
-                self.book_year.value), 0, int(self.book_age_rating.value), int(self.book_stock.value))
-            self.upload_files()
-            self.warningSnackBar.content = "Book added successfully!"
-            self.warningSnackBar.open = True
-            # except:
-            # self.warningSnackBar.open = True
+            try:
+                book_id = randint(1_000_000, 9_999_999)
+                self.upload_files()
+                self.page.db.addBook(self.page.session.get("current_user"), book_id, self.book_name.value, self.book_desc.value, int(
+                    self.book_year.value), 0, int(self.book_age_rating.value), int(self.book_stock.value))
+
+                self.warningSnackBar.content = ft.Text(
+                    "Book added successfully!")
+                self.warningSnackBar.open = True
+                self.update()
+            except:
+                print("ERR")
+                self.warningSnackBar.open = True
+                self.update()
