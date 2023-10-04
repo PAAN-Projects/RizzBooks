@@ -1,8 +1,10 @@
 import flet as ft
+import sqlite3 as sql
 
 from components.views.signUpUser import signUpView
 from components.views.bookAdd import bookAdd
 from components.views.login import login
+from components.views.Homepage import HomepageDisplay
 
 from database import ORM
 
@@ -66,7 +68,6 @@ def main(page: ft.Page):
                             )
                         ],
                     ),
-                    ft.Text(value="h")
                 ],
                 scroll="ALWAYS"
             )
