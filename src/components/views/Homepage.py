@@ -1,41 +1,35 @@
+from email.mime import text
 import math
 from time import sleep
 import flet as ft
-import sqlite3 as sql
+
+from database import ORM
 
 from random import randint
 import datetime
 
-def main(page: ft.Page):
-    page.theme_mode = "light"
-    page.title = "DEEZ Books"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.scroll = "ALWAYS"
 
-    sqlConnection=sql.connect("database.db")
-    sqlCursor=sql.Cursor(sqlConnection)
-    sqlCursor.execute("SELECT BookName FROM Books")
-    BookName=sqlCursor.fetchall()
-    sqlCursor.close()
-    sqlConnection.close()
+class HomePage(ft.UserControl):
+    def build(self):
+        self.db = ORM()
+        self.books = self.db.getAllBooks()
 
-    BookRow=ft.Row(scroll="ALWAYS ON", alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER)
-    BookGenre=ft.Text(value="Genre", size=30, weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER)
+        self.BookRow = ft.Row(scroll="ALWAYS ON", alignment=ft.MainAxisAlignment.CENTER,
+                              vertical_alignment=ft.CrossAxisAlignment.CENTER)
+        self.BookGenre = ft.Text(
+            value="Genre", size=30, weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER)
 
-    for i in BookName:
-        BookRow.controls.append(
-            ft.Column(
-                controls=[
-                    ft.Image(src=f"C:\\Users\\Neev\\DeezBooks\\src\\uploads\\{i[0]}.png",height=200, width=131),
-                    ft.Text(value=BookName[BookName.index(i)][0], size=15)
-                ]
+        for i in self.books:
+            self.BookRow.controls.append(
+                ft.Column(
+                    controls=[
+                        ft.Image(
+                            src=f"/assets/uploads/{i[1]}.png", height=260, width=170, fit=ft.ImageFit.COVER, border_radius=ft.BorderRadius(10, 10, 10, 10)),
+                        ft.Text(
+                            value=self.books[self.books.index(i)][1], size=18, weight=ft.FontWeight.W_500, text_align=ft.TextAlign.CENTER)
+                    ]
+                )
             )
-        )
-    page.add(BookGenre, BookRow)
-ft.app(target=main)
+        return self.BookRow
 
 # ye Alag file me homepage ka bana ke choda hai, main views me dalna nahi aa raha error aa raha hai
-
-    
-
