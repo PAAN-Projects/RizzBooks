@@ -1,10 +1,11 @@
 import flet as ft
 import sqlite3 as sql
 
+from components.views.Homepage import HomePage
 from components.views.signUpUser import signUpView
 from components.views.bookAdd import bookAdd
 from components.views.login import login
-from components.views.Homepage import HomepageDisplay
+# from components.views.Homepage import HomepageDisplay
 
 from database import ORM
 
@@ -31,6 +32,7 @@ def main(page: ft.Page):
     def openLogin(e):
         page.go("/login")
 
+    homePage = HomePage()
     signup = signUpView()
     addbook = bookAdd()
     loginpage = login()
@@ -68,6 +70,7 @@ def main(page: ft.Page):
                             )
                         ],
                     ),
+                    homePage
                 ],
                 scroll="ALWAYS"
             )
@@ -125,4 +128,4 @@ def main(page: ft.Page):
 
 
 ft.app(target=main, assets_dir="assets",
-       upload_dir="uploads", view=ft.WEB_BROWSER)
+       upload_dir="assests/uploads", view=ft.WEB_BROWSER)

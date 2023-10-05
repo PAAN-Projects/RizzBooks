@@ -23,6 +23,7 @@ class bookAdd(ft.UserControl):
         self.book_desc = ft.TextField(label="Description", multiline=True)
         self.book_year = ft.TextField(label="Publish year")
         self.book_age_rating = ft.TextField(label="Age rating")
+        self.book_genre = ft.TextField(label="Genre")
         self.book_stock = ft.TextField(label="Stock")
 
         self.add_book_button = ft.FilledButton(
@@ -37,6 +38,7 @@ class bookAdd(ft.UserControl):
             self.book_desc,
             self.book_year,
             self.book_age_rating,
+            self.book_genre,
             self.book_stock,
             self.add_book_button,
             self.warningSnackBar
@@ -73,16 +75,20 @@ class bookAdd(ft.UserControl):
 
     def addBookDb(self, e):
         self.warningSnackBar.content = ft.Text("Something went wrong")
-        if self.page.session.get("current_user") == None or self.book_name.value == "" or self.book_desc.value == "" or self.book_year.value == "" or self.book_age_rating.value == "" or self.book_stock.value == "":
+        if self.page.session.get("current_user") == None:
+            self.warningSnackBar.content = ft.Text("Please login.")
+            self.warningSnackBar.open = True
+            self.update()
+        elif self.book_name.value == "" or self.book_desc.value == "" or self.book_year.value == "" or self.book_age_rating.value == "" or self.book_genre.value == "" or self.book_stock.value == "":
             self.warningSnackBar.open = True
             self.update()
             return
         else:
             try:
                 book_id = randint(1_000_000, 9_999_999)
-                self.upload_files()
                 self.page.db.addBook(self.page.session.get("current_user"), book_id, self.book_name.value, self.book_desc.value, int(
-                    self.book_year.value), 0, int(self.book_age_rating.value), int(self.book_stock.value))
+                    self.book_year.value), 0, int(self.book_age_rating.value), int(self.book_stock.value), self.book_genre.value)
+                self.upload_files()
 
                 self.warningSnackBar.content = ft.Text(
                     "Book added successfully!")
