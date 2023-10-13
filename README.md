@@ -1,6 +1,6 @@
 # DeezBooks
 
-Class 12 project by Prayag, Neev and Aarsh (Session 2023-2024)
+Class 12 project by Prayag, Neev (Session 2023-2024)
 
 # Run the project
 
