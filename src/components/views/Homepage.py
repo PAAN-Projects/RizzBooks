@@ -22,7 +22,6 @@ class HomePage(ft.UserControl):
         for j in self.genre:
             self.BookColumn.append(ft.Text(
                 value=j[0], weight=ft.FontWeight.W_500, text_align=ft.TextAlign.CENTER, size=30))
-            print()
             for i in self.books:
                 if i[7] == j[0]:
                     self.BookRow.controls.append(
