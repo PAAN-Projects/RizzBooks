@@ -95,6 +95,13 @@ class ORM:
                                """)
         books = self.db_cursor.fetchall()
         return books
+    
+    def getGenre(self):
+        self.db_cursor.execute("""
+                               SELECT DISTINCT BookGenre FROM BOOKS
+                               """)
+        genre=self.db_cursor.fetchall()
+        return genre
 
     def delAllUsers(self):
         self.db_cursor.execute("""

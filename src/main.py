@@ -128,4 +128,4 @@ def main(page: ft.Page):
 
 
 ft.app(target=main, assets_dir="assets",
-       upload_dir="assests/uploads", view=ft.WEB_BROWSER)
+       upload_dir="assets/uploads", view=ft.WEB_BROWSER)
