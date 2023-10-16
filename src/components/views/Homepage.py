@@ -14,27 +14,33 @@ class HomePage(ft.UserControl):
         self.books = self.db.getAllBooks()
         self.genre = self.db.getGenre()
 
-        self.BookRow = ft.Row(scroll="ALWAYS ON", alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER)
+        self.BookRow = ft.Row(scroll="ALWAYS ON", alignment=ft.MainAxisAlignment.START, vertical_alignment=ft.CrossAxisAlignment.CENTER)
         self.BookColumn=[]
 
         for j in self.genre:
-            self.BookColumn.append(ft.Text(value=j[0], weight=ft.FontWeight.W_500, text_align=ft.TextAlign.CENTER, size=30))    
+            self.BookColumn.append(ft.Text(value=j[0], weight=ft.FontWeight.W_500, text_align=ft.TextAlign.START, size=30))    
             for i in self.books:
                 if i[8]==j[0]:
                     self.BookRow.controls.append(
                         ft.Column(
                             controls=[
                                 ft.Image(src=f"\\assets\\uploads\\{i[1]}.png", height=260, width=170, fit=ft.ImageFit.COVER, border_radius=ft.BorderRadius(10, 10, 10, 10)),
-                                ft.Text(value=self.books[self.books.index(i)][1], size=18, weight=ft.FontWeight.W_500, text_align=ft.TextAlign.CENTER)
+                                ft.Column(
+                                    controls=[
+                                        ft.Text(value=self.books[self.books.index(i)][1], size=15, weight=ft.FontWeight.W_500, text_align=ft.TextAlign.START),
+                                        ft.OutlinedButton(text="Buy", style=ft.ButtonStyle(shape=ft.CountinuosRectangleBorder(radius=10)))
+                                    ]
+                                )
+                                
                             ]
                         )
                     )
 
             self.BookColumn.append(self.BookRow)
-            self.BookRow = ft.Row(scroll="ALWAYS ON", alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER)
+            self.BookRow = ft.Row(scroll="ALWAYS ON", alignment=ft.MainAxisAlignment.START, vertical_alignment=ft.CrossAxisAlignment.CENTER)
 
 
-        self.BookShelf=ft.Column(controls=self.BookColumn, alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER)
+        self.BookShelf=ft.Column(controls=self.BookColumn, alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.START)
         self.BookContainer=ft.Container(content=self.BookShelf, padding=25)
         return self.BookContainer
     
