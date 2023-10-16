@@ -14,7 +14,6 @@ class HomePage(ft.UserControl):
         self.books = self.db.getAllBooks()
         self.genre = self.db.getGenre()
 
-        BookSet=[]
         self.BookRow = ft.Row(scroll="ALWAYS ON", alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER)
         self.BookColumn=[]
 
