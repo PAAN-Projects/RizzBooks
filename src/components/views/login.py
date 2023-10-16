@@ -47,9 +47,3 @@ class login(ft.UserControl):
             self.warningSnackBar.open = True
             pass
         self.update()
-
-    def hideLogin(self):
-        self.header.visible = False
-        self.userNameInput.visible = False
-        self.userPassInput.visible = False
-        self.loginBtn.visible = False
