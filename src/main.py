@@ -5,6 +5,7 @@ from components.views.Homepage import HomePage
 from components.views.signUpUser import signUpView
 from components.views.bookAdd import bookAdd
 from components.views.login import login
+from components.views.bookBuy import buyBook
 
 from database import ORM
 
@@ -35,6 +36,7 @@ def main(page: ft.Page):
     signup = signUpView()
     addbook = bookAdd()
     loginpage = login()
+    buybook = buyBook()
 
     def routeChange(route):
         page.views.clear()
@@ -111,6 +113,18 @@ def main(page: ft.Page):
                     ),
                     addbook],
                 scroll="ALWAYS"
+            ))
+        elif "/book/buy" in page.route:
+            page.views.append(ft.View(
+                page.route,
+                [
+                   ft.AppBar(
+                        title=ft.Text("Book Details",
+                                      font_family="Bookerly"),
+                        bgcolor=ft.colors.SURFACE_VARIANT,
+                    ),
+                    buybook
+                ]
             ))
         page.update()
 
