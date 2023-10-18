@@ -1,5 +1,6 @@
 import flet as ft
 import sqlite3 as sql
+from components.views.editBooks import EditBooks
 
 from components.views.Homepage import HomePage
 from components.views.signUpUser import signUpView
@@ -32,11 +33,18 @@ def main(page: ft.Page):
     def openLogin(e):
         page.go("/login")
 
+    def openEdit(e):
+        page.go("/books/edit")
+
     homePage = HomePage()
     signup = signUpView()
     addbook = bookAdd()
     loginpage = login()
+<<<<<<< HEAD
     buybook = buyBook()
+=======
+    editbooks = EditBooks()
+>>>>>>> 4506c6fb49d1dee4f863f8ee73f4ac650d337695
 
     def routeChange(route):
         page.views.clear()
@@ -47,7 +55,8 @@ def main(page: ft.Page):
                     ft.AppBar(
                         leading=ft.Icon(ft.icons.BOOK_ROUNDED),
                         leading_width=40,
-                        title=ft.Text("DEEZ Books", font_family="Bookerly"),
+                        title=ft.Text(
+                            "DEEZ Books", font_family="Bookerly", size=32),
                         center_title=False,
                         bgcolor=ft.colors.SURFACE_VARIANT,
                         actions=[
@@ -65,7 +74,9 @@ def main(page: ft.Page):
                                     ft.PopupMenuItem(
                                         text="Login", on_click=openLogin),
                                     ft.PopupMenuItem(
-                                        text="Sign Up", on_click=openSignUp)
+                                        text="Sign Up", on_click=openSignUp),
+                                    ft.PopupMenuItem(
+                                        text="Edit Books", on_click=openEdit)
                                 ],
                                 icon=ft.icons.ACCOUNT_CIRCLE_ROUNDED
                             )
@@ -73,7 +84,8 @@ def main(page: ft.Page):
                     ),
                     homePage
                 ],
-                scroll="ALWAYS"
+                scroll="ALWAYS",
+                padding=0
             )
         )
         if page.route == "/signup":
@@ -91,7 +103,7 @@ def main(page: ft.Page):
             ))
         elif page.route == "/login":
             page.views.append(ft.View(
-                "/book/add",
+                "/login",
                 [
                     ft.AppBar(
                         title=ft.Text("Login",
@@ -114,6 +126,7 @@ def main(page: ft.Page):
                     addbook],
                 scroll="ALWAYS"
             ))
+<<<<<<< HEAD
         elif "/book/buy" in page.route:
             page.views.append(ft.View(
                 page.route,
@@ -126,6 +139,22 @@ def main(page: ft.Page):
                     buybook
                 ]
             ))
+=======
+        elif page.route == "/books/edit":
+            page.views.append(ft.View(
+                "/books/edit",
+                [
+                    ft.AppBar(
+                        title=ft.Text("Edit Books",
+                                      font_family="Bookerly"),
+                        bgcolor=ft.colors.SURFACE_VARIANT,
+                    ),
+                    editbooks],
+                padding=0,
+                scroll="ALWAYS"
+            ))
+        page.padding = 0
+>>>>>>> 4506c6fb49d1dee4f863f8ee73f4ac650d337695
         page.update()
 
     def view_pop(e):

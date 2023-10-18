@@ -95,12 +95,12 @@ class ORM:
                                """)
         books = self.db_cursor.fetchall()
         return books
-    
+
     def getGenre(self):
         self.db_cursor.execute("""
                                SELECT DISTINCT BookGenre FROM BOOKS
                                """)
-        genre=self.db_cursor.fetchall()
+        genre = self.db_cursor.fetchall()
         return genre
 
     def delAllUsers(self):
@@ -113,4 +113,10 @@ class ORM:
         self.db_cursor.execute("""
                                DELETE FROM Books
                                """)
+        self.db_connection.commit()
+
+    def delBook(self, book_id):
+        self.db_cursor.execute("""
+                               DELETE FROM Books WHERE BookID=(?)
+                               """, (book_id,))
         self.db_connection.commit()
