@@ -40,11 +40,8 @@ def main(page: ft.Page):
     signup = signUpView()
     addbook = bookAdd()
     loginpage = login()
-<<<<<<< HEAD
     buybook = buyBook()
-=======
     editbooks = EditBooks()
->>>>>>> 4506c6fb49d1dee4f863f8ee73f4ac650d337695
 
     def routeChange(route):
         page.views.clear()
@@ -126,7 +123,6 @@ def main(page: ft.Page):
                     addbook],
                 scroll="ALWAYS"
             ))
-<<<<<<< HEAD
         elif "/book/buy" in page.route:
             page.views.append(ft.View(
                 page.route,
@@ -139,7 +135,6 @@ def main(page: ft.Page):
                     buybook
                 ]
             ))
-=======
         elif page.route == "/books/edit":
             page.views.append(ft.View(
                 "/books/edit",
@@ -154,7 +149,6 @@ def main(page: ft.Page):
                 scroll="ALWAYS"
             ))
         page.padding = 0
->>>>>>> 4506c6fb49d1dee4f863f8ee73f4ac650d337695
         page.update()
 
     def view_pop(e):
