@@ -29,9 +29,10 @@ class HomePage(ft.UserControl):
                             controls=[
                                 ft.Image(src=f"\\assets\\uploads\\{i[1]}.png", height=260, width=170,
                                          fit=ft.ImageFit.COVER, border_radius=ft.BorderRadius(10, 10, 10, 10)),
-                                ft.Text(value=i[1], size=18, weight=ft.FontWeight.W_500, text_align=ft.TextAlign.START, width=170, max_lines=1),
+                                ft.Text(value=i[1], size=18, weight=ft.FontWeight.W_500,
+                                        text_align=ft.TextAlign.START, width=170, max_lines=1),
                                 ft.OutlinedButton(
-                                    text="Buy", on_click=lambda _:self.page.go(f"/book/buy/")),
+                                    text="Buy", on_click=lambda e, book_id=i[0]:self.goToBook(e, book_id)),
                                 ft.Text(value=" ", size=18, weight=ft.FontWeight.W_500,
                                         text_align=ft.TextAlign.START, width=170, max_lines=1)
                             ]
@@ -48,3 +49,7 @@ class HomePage(ft.UserControl):
         self.BookContainer = ft.Container(
             content=self.BookShelf, padding=0, margin=ft.Margin(left=12, top=0, right=12, bottom=0), alignment=ft.alignment.center_left)
         return self.BookContainer
+
+    def goToBook(self, e, book_id):
+        print("ef54orgj", book_id)
+        self.page.go(f"/book/buy/{book_id}")

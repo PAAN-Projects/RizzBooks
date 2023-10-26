@@ -8,21 +8,20 @@ from database import ORM
 from random import randint
 import datetime
 
+
 class buyBook(ft.UserControl):
+    def did_mount(self):
+        self.abcd = self.page.route.removeprefix("/book/buy/")
+        self.content.append(ft.Text(value=self.abcd))
+
+        # Write code here
+
+        self.update()
+        return super().did_mount()
+
     def build(self):
-        self.db=ORM()
-        self.books=self.db.getAllBooks()
+        self.db = ORM()
+        self.books = self.db.getAllBooks()
 
-        for i in self.books:
-            if i[1] == self.BookName:
-                self.BookDesc=i[3]
-                break
-
-        self.BookDetails = ft.Column(
-            controls=[
-                ft.Image(src=f"\\assets\\uploads\\{self.BookName}.png"),
-                ft.Text(value=self.BookName, size=24, weight=ft.FontWeight.W_600),
-                ft.Text(value=self.BookDesc)
-            ]
-        )
-        return self.BookDetails
+        self.content = []
+        return self.content

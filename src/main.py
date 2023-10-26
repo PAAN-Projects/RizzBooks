@@ -43,6 +43,8 @@ def main(page: ft.Page):
     buybook = buyBook()
     editbooks = EditBooks()
 
+    troute = ft.TemplateRoute(page.route)
+
     def routeChange(route):
         page.views.clear()
         page.views.append(
@@ -123,11 +125,12 @@ def main(page: ft.Page):
                     addbook],
                 scroll="ALWAYS"
             ))
-        elif "/book/buy" in page.route:
+        elif "/book/buy/" in page.route:
+            print(page.route)
             page.views.append(ft.View(
                 page.route,
                 [
-                   ft.AppBar(
+                    ft.AppBar(
                         title=ft.Text("Book Details",
                                       font_family="Bookerly"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
