@@ -96,6 +96,13 @@ class ORM:
         books = self.db_cursor.fetchall()
         return books
 
+    def getBook(self, book_id):
+        self.db_cursor.execute("""
+                               SELECT * FROM Books WHERE BookID=?
+                               """, (book_id,))
+        books = self.db_cursor.fetchall()
+        return books
+
     def getGenre(self):
         self.db_cursor.execute("""
                                SELECT DISTINCT BookGenre FROM BOOKS

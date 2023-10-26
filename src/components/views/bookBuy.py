@@ -11,8 +11,10 @@ import datetime
 
 class buyBook(ft.UserControl):
     def did_mount(self):
-        self.abcd = self.page.route.removeprefix("/book/buy/")
-        self.content.append(ft.Text(value=self.abcd))
+        self.book_id = self.page.route.removeprefix("/book/buy/")
+        self.content.append(ft.Text(value=self.book_id))
+        self.book = self.db.getBook(self.book_id)
+        print(self.book)
 
         # Write code here
 
