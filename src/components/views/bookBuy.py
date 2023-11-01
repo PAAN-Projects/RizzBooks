@@ -16,8 +16,6 @@ class buyBook(ft.UserControl):
         self.book = self.db.getBook(self.book_id)
         print(self.book)
 
-        # Write code here
-
         self.update()
         return super().did_mount()
 

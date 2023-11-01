@@ -38,6 +38,7 @@ class ORM:
                                     BookRatedAge int,
                                     BookStock int,
                                     BookGenre varchar(255),
+                                    BookPrice int,
                                     BookSellerID int,
                                     PRIMARY KEY (BookID),
                                     FOREIGN KEY (BookSelLerID) REFERENCES Users(UserID)
@@ -45,13 +46,12 @@ class ORM:
                                 """)
         self.db_connection.commit()
 
-    def addBook(self, user_name, book_id, book_name, book_description, book_year, book_rating, book_ratedage, book_stock, book_genre):
+    def addBook(self, user_name, book_id, book_name, book_description, book_year, book_rating, book_ratedage, book_stock, book_price, book_genre):
         self.db_cursor.execute("""
                                     SELECT * FROM Users
                                     WHERE UserName=?
                                """, (user_name,))
         user = self.db_cursor.fetchall()
-        print(user)
         self.db_cursor.execute("""
                                 INSERT INTO Books(
                                     BookID,
@@ -62,10 +62,11 @@ class ORM:
                                     BookRatedAge,
                                     BookStock,
                                     BookGenre,
+                                    BookPrice,
                                     BookSellerId
                                 )
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-                               """, (book_id, book_name, book_description, book_year, book_rating, book_ratedage, book_stock, book_genre, user[0][0]))
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                               """, (book_id, book_name, book_description, book_year, book_rating, book_ratedage, book_stock, book_genre, book_price, user[0][0]))
         self.db_connection.commit()
 
     def addUser(self, user_id, user_name, user_year, user_age, user_pass):
@@ -109,6 +110,21 @@ class ORM:
                                """)
         genre = self.db_cursor.fetchall()
         return genre
+
+    def updateBook(self, book_id, book_stock):
+        self.db_cursor.execute("""
+                               UPDATE Books
+                               SET BookStock=?
+                               WHERE BookID=?
+                               """, (book_stock, book_id))
+        self.db_connection.commit()
+
+    def searchBook(self, query):
+        self.db_cursor.execute("""
+                               SELECT * FROM Books WHERE BookName like ?
+                               """, ("%" + query + "%",))
+        books = self.db_cursor.fetchall()
+        return books
 
     def delAllUsers(self):
         self.db_cursor.execute("""

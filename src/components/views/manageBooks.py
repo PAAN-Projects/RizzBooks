@@ -1,6 +1,7 @@
 from email.mime import text
 import math
 from time import sleep
+from turtle import color
 import flet as ft
 
 from database import ORM
@@ -9,8 +10,7 @@ from random import randint
 import datetime
 
 
-class HomePage(ft.UserControl):
-
+class manageBooks(ft.UserControl):
     def build(self):
         self.db = ORM()
         self.books = self.db.getAllBooks()
@@ -28,11 +28,11 @@ class HomePage(ft.UserControl):
                         ft.Column(
                             controls=[
                                 ft.Image(src=f"\\assets\\uploads\\{i[1]}.png", height=260, width=170,
-                                         fit=ft.ImageFit.COVER, border_radius=ft.BorderRadius(10, 10, 10, 10)),
-                                ft.Text(value=i[1], size=18, weight=ft.FontWeight.W_500,
-                                        text_align=ft.TextAlign.START, width=170, max_lines=1),
-                                ft.OutlinedButton(
-                                    text="Buy", on_click=lambda e, book_id=i[0]:self.goToBook(e, book_id)),
+                                         fit=ft.ImageFit.COVER, border_radius=ft.BorderRadius(10, 10, 10, 10), ),
+                                ft.Text(value=self.books[self.books.index(
+                                    i)][1], size=18, weight=ft.FontWeight.W_500, text_align=ft.TextAlign.START, width=170, max_lines=1),
+                                ft.Row(controls=[
+                                    ft.IconButton(icon=ft.icons.DELETE, style=ft.ButtonStyle(color=ft.colors.RED_400), on_click=lambda e, book_id=i[0]:self.deleteBook(e, book_id)), ft.IconButton(icon=ft.icons.EDIT, style=ft.ButtonStyle(color=ft.colors.AMBER_400), on_click=lambda e, book_id=i[0]:self.goToBook(e, book_id))]),
                                 ft.Text(value=" ", size=18, weight=ft.FontWeight.W_500,
                                         text_align=ft.TextAlign.START, width=170, max_lines=1)
                             ]
@@ -51,4 +51,12 @@ class HomePage(ft.UserControl):
         return self.BookContainer
 
     def goToBook(self, e, book_id):
-        self.page.go(f"/book/buy/{book_id}")
+        self.page.go(f"/book/edit/{book_id}")
+
+    def deleteBook(self, book_id):
+        self.page.db.delBook(book_id)
+        self.page.snack_bar.open = True
+
+        # Refreshes view to get new books
+        self.page.go("/book/")
+        self.page.go("/books/edit")

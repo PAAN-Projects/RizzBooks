@@ -1,12 +1,15 @@
+from xmlrpc.client import Boolean
 import flet as ft
 import sqlite3 as sql
-from components.views.editBooks import EditBooks
 
 from components.views.Homepage import HomePage
 from components.views.signUpUser import signUpView
 from components.views.bookAdd import bookAdd
 from components.views.login import login
 from components.views.bookBuy import buyBook
+from components.views.manageBooks import manageBooks
+from components.views.editBooks import editBooks
+from components.views.search import search
 
 from database import ORM
 
@@ -20,7 +23,9 @@ def main(page: ft.Page):
     page.pick_files_dialog = ft.FilePicker()
     page.overlay.append(page.pick_files_dialog)
     page.db = ORM()
-
+    page.searchQuery = ""
+    page.snack_bar = ft.SnackBar(content=ft.Text("Book Deleted"), open=False)
+    # page.add(page.snack_bar)
     page.fonts = {
         "Bookerly Bold": "https://cdn.jsdelivr.net/gh/PAAN-Projects/DeezBooks@master/src/assets/fonts/Bookerly-Bold.ttf",
         "Bookerly Italic": "https://cdn.jsdelivr.net/gh/PAAN-Projects/DeezBooks@master/src/assets/fonts/Bookerly Italic.ttf",
@@ -41,9 +46,20 @@ def main(page: ft.Page):
     addbook = bookAdd()
     loginpage = login()
     buybook = buyBook()
-    editbooks = EditBooks()
+    managebooks = manageBooks()
+    editbooks = editBooks()
+    searchRoute = search()
 
-    troute = ft.TemplateRoute(page.route)
+    def setSearchQuery(e):
+        page.searchQuery = e.control.value
+        page.update()
+
+    def goToSearch(e):
+        if (len(page.searchQuery) > 0):
+            page.go("/home")
+            page.go("/search")
+            # page.searchQuery = searchBar.value
+        # print(page.searchQuery)
 
     def routeChange(route):
         page.views.clear()
@@ -65,9 +81,11 @@ def main(page: ft.Page):
                                 filled=True,
                                 hint_text="Search here",
                                 border_width=0,
-                                border_radius=0
+                                border_radius=0,
+                                on_change=setSearchQuery,
                             ),
-                            ft.IconButton(ft.icons.SEARCH_ROUNDED),
+                            ft.IconButton(ft.icons.SEARCH_ROUNDED,
+                                          on_click=goToSearch),
                             ft.PopupMenuButton(
                                 items=[
                                     ft.PopupMenuItem(
@@ -138,6 +156,18 @@ def main(page: ft.Page):
                     buybook
                 ]
             ))
+        elif "/book/edit" in page.route:
+            page.views.append(ft.View(
+                page.route,
+                [
+                    ft.AppBar(
+                        title=ft.Text("Edit Book Stock",
+                                      font_family="Bookerly"),
+                        bgcolor=ft.colors.SURFACE_VARIANT,
+                    ),
+                    editbooks],
+                scroll="ALWAYS"
+            ))
         elif page.route == "/books/edit":
             page.views.append(ft.View(
                 "/books/edit",
@@ -147,7 +177,50 @@ def main(page: ft.Page):
                                       font_family="Bookerly"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
-                    editbooks],
+                    managebooks],
+                padding=0,
+                scroll="ALWAYS"
+            ))
+        elif page.route == "/search":
+            page.views.append(ft.View(
+                "/search",
+                [
+                    ft.AppBar(
+                        leading=ft.Icon(ft.icons.BOOK_ROUNDED),
+                        leading_width=40,
+                        title=ft.Text(
+                            "DEEZ Books", font_family="Bookerly", size=32),
+                        center_title=False,
+                        bgcolor=ft.colors.SURFACE_VARIANT,
+                        actions=[
+                            ft.IconButton(
+                                ft.icons.HOME, on_click=lambda _:page.go("/home")),
+                            ft.IconButton(
+                                ft.icons.ADD, on_click=lambda _: page.go("/book/add")),
+                            ft.TextField(
+                                filled=True,
+                                hint_text="Search here",
+                                border_width=0,
+                                border_radius=0,
+                                on_change=setSearchQuery,
+                                value=page.searchQuery
+                            ),
+                            ft.IconButton(ft.icons.SEARCH_ROUNDED,
+                                          on_click=goToSearch),
+                            ft.PopupMenuButton(
+                                items=[
+                                    ft.PopupMenuItem(
+                                        text="Login", on_click=openLogin),
+                                    ft.PopupMenuItem(
+                                        text="Sign Up", on_click=openSignUp),
+                                    ft.PopupMenuItem(
+                                        text="Edit Books", on_click=openEdit)
+                                ],
+                                icon=ft.icons.ACCOUNT_CIRCLE_ROUNDED
+                            )
+                        ],
+                    ),
+                    searchRoute],
                 padding=0,
                 scroll="ALWAYS"
             ))

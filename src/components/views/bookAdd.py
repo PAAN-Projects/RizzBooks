@@ -25,6 +25,7 @@ class bookAdd(ft.UserControl):
         self.book_age_rating = ft.TextField(label="Age rating")
         self.book_genre = ft.TextField(label="Genre")
         self.book_stock = ft.TextField(label="Stock")
+        self.book_price = ft.TextField(label="Price")
 
         self.add_book_button = ft.FilledButton(
             "Add book", icon=ft.icons.ADD_ROUNDED, on_click=self.addBookDb)
@@ -40,6 +41,7 @@ class bookAdd(ft.UserControl):
             self.book_age_rating,
             self.book_genre,
             self.book_stock,
+            self.book_price,
             self.add_book_button,
             self.warningSnackBar
         ], alignment=ft.MainAxisAlignment.CENTER), alignment=ft.alignment.center, padding=50)
@@ -74,25 +76,28 @@ class bookAdd(ft.UserControl):
             self.page.pick_files_dialog.upload(upload_list)
 
     def addBookDb(self, e):
-        self.warningSnackBar.content = ft.Text("Something went wrong")
+        self.warningSnackBar.content = ft.Text("One or more fields empty")
         if self.page.session.get("current_user") == None:
             self.warningSnackBar.content = ft.Text("Please login.")
             self.warningSnackBar.open = True
+            self.warningSnackBar.bgcolor = "red"
             self.update()
-        elif self.book_name.value == "" or self.book_desc.value == "" or self.book_year.value == "" or self.book_age_rating.value == "" or self.book_genre.value == "" or self.book_stock.value == "":
+        elif self.book_name.value == "" or self.book_desc.value == "" or self.book_year.value == "" or self.book_age_rating.value == "" or self.book_genre.value == "" or self.book_stock.value == "" or self.book_price.value == "":
             self.warningSnackBar.open = True
+            self.warningSnackBar.bgcolor = "red"
             self.update()
             return
         else:
             try:
                 book_id = randint(1_000_000, 9_999_999)
                 self.page.db.addBook(self.page.session.get("current_user"), book_id, self.book_name.value, self.book_desc.value, int(
-                    self.book_year.value), 0, int(self.book_age_rating.value), int(self.book_stock.value), self.book_genre.value)
+                    self.book_year.value), 0, int(self.book_age_rating.value), int(self.book_stock.value), self.book_genre.value, self.book_price.value)
                 self.upload_files()
 
                 self.warningSnackBar.content = ft.Text(
                     "Book added successfully!")
                 self.warningSnackBar.open = True
+                self.warningSnackBar.bgcolor = "green"
                 self.update()
             except:
                 print("ERR")

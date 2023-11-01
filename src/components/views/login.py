@@ -33,6 +33,7 @@ class login(ft.UserControl):
     def login(self, e):
         self.warningSnackBar.open = False
         self.warningSnackBar.content = ft.Text("Wrong username or password")
+        self.warningSnackBar.bgcolor = "red"
         self.update()
         try:
             req = self.page.db.getUser(user_name=self.userNameInput.value, )
@@ -41,6 +42,7 @@ class login(ft.UserControl):
                 self.warningSnackBar.content = ft.Text(
                     f"Logged in as {req[1]}")
                 self.warningSnackBar.open = True
+                self.warningSnackBar.bgcolor = "green"
             else:
                 self.warningSnackBar.open = True
         except:
