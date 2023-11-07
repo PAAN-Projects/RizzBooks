@@ -32,7 +32,7 @@ class HomePage(ft.UserControl):
                                 ft.Text(value=i[1], size=18, weight=ft.FontWeight.W_500,
                                         text_align=ft.TextAlign.START, width=170, max_lines=1),
                                 ft.OutlinedButton(
-                                    text="Buy", on_click=lambda e, book_id=i[0]:self.goToBook(e, book_id)),
+                                    text="View", on_click=lambda e, book_id=i[0]:self.goToBook(e, book_id)),
                                 ft.Text(value=" ", size=18, weight=ft.FontWeight.W_500,
                                         text_align=ft.TextAlign.START, width=170, max_lines=1)
                             ]

@@ -10,6 +10,7 @@ from components.views.bookBuy import buyBook
 from components.views.manageBooks import manageBooks
 from components.views.editBooks import editBooks
 from components.views.search import search
+from components.views.Checkout import Checkout
 
 from database import ORM
 
@@ -49,6 +50,7 @@ def main(page: ft.Page):
     managebooks = manageBooks()
     editbooks = editBooks()
     searchRoute = search()
+    checkout=Checkout()
 
     def setSearchQuery(e):
         page.searchQuery = e.control.value
@@ -154,6 +156,18 @@ def main(page: ft.Page):
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
                     buybook
+                ]
+            ))
+        elif "/checkout" in page.route:
+            page.views.append(ft.View(
+                page.route,
+                [
+                    ft.AppBar(
+                        title=ft.Text("Checkout",
+                                      font_family="Bookerly"),
+                        bgcolor=ft.colors.SURFACE_VARIANT,
+                    ),
+                    checkout
                 ]
             ))
         elif "/book/edit" in page.route:
