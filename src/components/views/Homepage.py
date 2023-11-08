@@ -25,19 +25,18 @@ class HomePage(ft.UserControl):
             for i in self.books:
                 if i[7] == j[0]:
                     self.BookRow.controls.append(
-                        ft.Column(
-                            controls=[
-                                ft.Image(src=f"\\assets\\uploads\\{i[1]}.png", height=260, width=170,
+                        ft.TextButton(
+                            content=ft.Column(controls=[
+                                ft.Image(src=f"\\assets\\uploads\\{i[1]}.png", height=260,
                                          fit=ft.ImageFit.COVER, border_radius=ft.BorderRadius(10, 10, 10, 10)),
+                                ft.Row(controls=[
+                                    ft.Icon(name=ft.icons.CURRENCY_RUPEE_ROUNDED), ft.Text(
+                                        value=i[8], size=18,  weight=ft.FontWeight.W_700),], spacing=0, alignment=ft.MainAxisAlignment.START),
                                 ft.Text(value=i[1], size=18, weight=ft.FontWeight.W_500,
-                                        text_align=ft.TextAlign.START, width=170, max_lines=1),
-                                ft.OutlinedButton(
-                                    text="View", on_click=lambda e, book_id=i[0]:self.goToBook(e, book_id)),
-                                ft.Text(value=" ", size=18, weight=ft.FontWeight.W_500,
-                                        text_align=ft.TextAlign.START, width=170, max_lines=1)
-                            ]
-
-                        )
+                                        text_align=ft.TextAlign.START),
+                            ], alignment=ft.MainAxisAlignment.CENTER), style=ft.ButtonStyle(bgcolor="#f0f0f0", color="black", shape={
+                                ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10),
+                            }, padding=15), on_click=lambda e, book_id=i[0]: self.goToBook(e, book_id), width=190)
                     )
 
             self.BookColumn.append(self.BookRow)

@@ -23,7 +23,6 @@ horror = requests.get(
 thriller = requests.get(
     "https://openlibrary.org/subjects/thriller.json").json()["works"][:10]
 
-user_id = 5028606
 user_name = "Prayag"
 
 # print(len(scifi_books))

@@ -25,7 +25,8 @@ def main(page: ft.Page):
     page.overlay.append(page.pick_files_dialog)
     page.db = ORM()
     page.searchQuery = ""
-    page.snack_bar = ft.SnackBar(content=ft.Text("Book Deleted"), open=False)
+    page.snack_bar = ft.SnackBar(content=ft.Text(
+        "Book Deleted"), open=False, bgcolor="red")
     # page.add(page.snack_bar)
     page.fonts = {
         "Bookerly Bold": "https://cdn.jsdelivr.net/gh/PAAN-Projects/DeezBooks@master/src/assets/fonts/Bookerly-Bold.ttf",
@@ -50,7 +51,7 @@ def main(page: ft.Page):
     managebooks = manageBooks()
     editbooks = editBooks()
     searchRoute = search()
-    checkout=Checkout()
+    checkout = Checkout()
 
     def setSearchQuery(e):
         page.searchQuery = e.control.value
@@ -208,7 +209,7 @@ def main(page: ft.Page):
                         bgcolor=ft.colors.SURFACE_VARIANT,
                         actions=[
                             ft.IconButton(
-                                ft.icons.HOME, on_click=lambda _:page.go("/home")),
+                                ft.icons.HOME, on_click=lambda _: page.go("/home")),
                             ft.IconButton(
                                 ft.icons.ADD, on_click=lambda _: page.go("/book/add")),
                             ft.TextField(

@@ -30,9 +30,9 @@ class manageBooks(ft.UserControl):
                                 ft.Image(src=f"\\assets\\uploads\\{i[1]}.png", height=260, width=170,
                                          fit=ft.ImageFit.COVER, border_radius=ft.BorderRadius(10, 10, 10, 10), ),
                                 ft.Text(value=self.books[self.books.index(
-                                    i)][1], size=18, weight=ft.FontWeight.W_500, text_align=ft.TextAlign.START, width=170, max_lines=1),
+                                    i)][1], size=18, weight=ft.FontWeight.W_500, text_align=ft.TextAlign.START, width=170),
                                 ft.Row(controls=[
-                                    ft.IconButton(icon=ft.icons.DELETE, style=ft.ButtonStyle(color=ft.colors.RED_400), on_click=lambda e, book_id=i[0]:self.deleteBook(e, book_id)), ft.IconButton(icon=ft.icons.EDIT, style=ft.ButtonStyle(color=ft.colors.AMBER_400), on_click=lambda e, book_id=i[0]:self.goToBook(e, book_id))]),
+                                    ft.IconButton(icon=ft.icons.DELETE, style=ft.ButtonStyle(color=ft.colors.RED_400), on_click=lambda e, book_id=i[0]: self.deleteBook(e, book_id)), ft.IconButton(icon=ft.icons.EDIT, style=ft.ButtonStyle(color=ft.colors.AMBER_400), on_click=lambda e, book_id=i[0]: self.goToBook(e, book_id))]),
                                 ft.Text(value=" ", size=18, weight=ft.FontWeight.W_500,
                                         text_align=ft.TextAlign.START, width=170, max_lines=1)
                             ]
@@ -53,7 +53,7 @@ class manageBooks(ft.UserControl):
     def goToBook(self, e, book_id):
         self.page.go(f"/book/edit/{book_id}")
 
-    def deleteBook(self, book_id):
+    def deleteBook(self, e, book_id):
         self.page.db.delBook(book_id)
         self.page.snack_bar.open = True
 
