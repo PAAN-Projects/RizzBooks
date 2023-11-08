@@ -156,8 +156,7 @@ def main(page: ft.Page):
                                       font_family="Bookerly"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
-                    buybook
-                ]
+                    buybook]
             ))
         elif "/checkout" in page.route:
             page.views.append(ft.View(
@@ -168,8 +167,7 @@ def main(page: ft.Page):
                                       font_family="Bookerly"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
-                    checkout
-                ]
+                    checkout]
             ))
         elif "/book/edit" in page.route:
             page.views.append(ft.View(

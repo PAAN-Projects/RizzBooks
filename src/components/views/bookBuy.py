@@ -66,4 +66,4 @@ class buyBook(ft.UserControl):
         return self.content
 
     def goToBill(self, e, book_id):
-        self.page.go(f"/book/buy/checkout/{book_id}")
+        self.page.go(f"/checkout/{book_id}")
