@@ -46,14 +46,13 @@ class buyBook(ft.UserControl):
                                     ft.FilledButton(
                                         content=ft.Text("Buy", size=18), on_click=lambda e, book_id=self.page.route.removeprefix("/book/buy/"): self.goToBill(e, book_id), height=40, width=100)
                                 ],
-                                scroll=ft.ScrollMode.ALWAYS, height=620
+                                # scroll=ft.ScrollMode.ALWAYS, height=620
                             )
                         ], alignment=ft.MainAxisAlignment.START, vertical_alignment=ft.CrossAxisAlignment.START
                     ),
                 ]
             )
         )
-        print(self.book)
 
         self.update()
         return super().did_mount()
