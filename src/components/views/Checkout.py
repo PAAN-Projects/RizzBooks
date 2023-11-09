@@ -56,7 +56,7 @@ class Checkout(ft.UserControl):
         self.db = ORM()
         self.books = self.db.getAllBooks()
         self.dialog = ft.AlertDialog(
-            title=ft.Text("Thanks for your Money. You have been SCAMMED!!"), on_dismiss=lambda e: self.page.go("/"),
+            title=ft.Text("Thank you!!"), on_dismiss=lambda e: self.page.go("/"),
             content=ft.Image(src="\\assets\\images\\rickroll-roll.gif"),
         )
 
