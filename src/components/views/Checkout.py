@@ -19,7 +19,7 @@ class Checkout(ft.UserControl):
                     content=ft.Column(
                         controls=[
                             ft.Image(src=f"src\\assets\\uploads\\{self.bookdetails[0][1]}.png", border_radius=ft.BorderRadius(
-                                top_left=20, top_right=20, bottom_right=20, bottom_left=20), fit=ft.ImageFit.COVER, height=544, width=310),
+                                top_left=20, top_right=20, bottom_right=20, bottom_left=20), fit=ft.ImageFit.COVER, height=403, width=230),
                             ft.Text(
                                 value=f"Book Name      :\t\t\t{self.bookdetails[0][1]}", font_family="Bookerly", size=30),
                             ft.Text(
