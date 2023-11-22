@@ -1,8 +1,4 @@
-import math
-from time import sleep
 import flet as ft
-from utils.password import checkStrength
-from database import ORM
 
 from random import randint
 import datetime

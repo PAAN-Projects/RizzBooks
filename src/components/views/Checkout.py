@@ -1,12 +1,6 @@
-from email.mime import text
-import math
-from time import sleep
 import flet as ft
 
 from database import ORM
-
-from random import randint
-import datetime
 
 
 class Checkout(ft.UserControl):

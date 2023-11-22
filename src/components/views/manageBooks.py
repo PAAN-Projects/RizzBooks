@@ -1,13 +1,6 @@
-from email.mime import text
-import math
-from time import sleep
-from turtle import color
 import flet as ft
 
 from database import ORM
-
-from random import randint
-import datetime
 
 
 class manageBooks(ft.UserControl):

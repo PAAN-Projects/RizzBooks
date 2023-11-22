@@ -1,6 +1,4 @@
-from xmlrpc.client import Boolean
 import flet as ft
-import sqlite3 as sql
 
 from components.views.Homepage import HomePage
 from components.views.signUpUser import signUpView
